@@ -10,7 +10,10 @@
 .\objects\delay.o: .\RTE\Device\STM32F103C8\stm32f10x_conf.h
 .\objects\delay.o: C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc\stm32f10x_gpio.h
 .\objects\delay.o: C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\Include\stm32f10x.h
+.\objects\delay.o: C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc\stm32f10x_i2c.h
 .\objects\delay.o: C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc\stm32f10x_rcc.h
+.\objects\delay.o: C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc\stm32f10x_tim.h
+.\objects\delay.o: C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc\stm32f10x_usart.h
 .\objects\delay.o: C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc\misc.h
 .\objects\delay.o: ..\USER\CONFIG_STM32F10X.h
 .\objects\delay.o: C:\Program Files\KeilC529\ARM\ARMCC\Bin\..\include\ctype.h

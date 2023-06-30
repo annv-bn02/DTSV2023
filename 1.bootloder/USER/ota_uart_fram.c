@@ -14,21 +14,21 @@ uint8_t checkpoint = 0;
 uint16_t crc, crc_byte, crc_receive, se_flag;
 uint32_t datasize;
 uint32_t SizeFileBin;
-uint32_t Count_SizeFileBin = FLASH_APP_ADDR;
+uint32_t Count_SizeFileBin = FLASH_APP_TEMP_ADDR;
 uint32_t tempss = 0;
 
-static void ext_init_otadata(void);
-static void ext_reset_index(void);
-static void ext_end_frame(void);
-static void ext_process_frame(void);
+static void ETX_Init_OTAdata(void);
+static void ETX_Reset_Index(void);
+static void ETX_End_Frame(void);
+static void ETX_Process_Frame(void);
+static void ETX_Program_Main_App(void);
 
-
-void etx_run(void)
+void ETX_Run(void)
 {
-	ext_process_frame();
+	ETX_Process_Frame();
 }
 
-static void ext_process_frame(void)
+static void ETX_Process_Frame(void)
 {
 	if(OTA_Data.FlagFrame == 1)
 	{
@@ -42,14 +42,14 @@ static void ext_process_frame(void)
 			{
 			  if( cmd->cmd == ETX_OTA_CMD_START )
 			  {
-					FLASH_If_Erase(FLASH_APP_ADDR);
+					FLASH_If_Erase(FLASH_APP_TEMP_ADDR);
 					ota_state = ETX_OTA_STATE_HEADER;
 					checkpoint = 1;
 			  }
 			}
 			else
 			{
-				Count_SizeFileBin = FLASH_APP_ADDR;
+				Count_SizeFileBin = FLASH_APP_TEMP_ADDR;
 				tempss = 0;
 				SizeFileBin = 0;
 			}
@@ -96,7 +96,7 @@ static void ext_process_frame(void)
 					}
 					dd = (uint32_t*)ArrTemp;
 					FLASH_If_Write(&Count_SizeFileBin, (uint32_t*)dd, (uint32_t)datasize/4);	
-					tempss = Count_SizeFileBin - FLASH_APP_ADDR;
+					tempss = Count_SizeFileBin - FLASH_APP_TEMP_ADDR;
 					if(tempss >= SizeFileBin)
 					{
 						ota_state = ETX_OTA_STATE_END;
@@ -116,6 +116,7 @@ static void ext_process_frame(void)
 				  {
 						checkpoint = 5;
 						ota_state = ETX_OTA_STATE_START;
+						ETX_Program_Main_App();
 						FLASH_If_Finish();
 				  }
 				}
@@ -131,15 +132,15 @@ static void ext_process_frame(void)
 		}
 }
 
-void etx_receive_chunk(void)
+void ETX_Receive_Chunk(void)
 {
 	FLASH_If_Init();
 	OTA_Data.Buffer[0] =0;
 	ota_state = ETX_OTA_STATE_START;
-	ext_init_otadata();
+	ETX_Init_OTAdata();
 } 
 
-static void ext_reset_index(void)
+static void ETX_Reset_Index(void)
 {
 	OTA_Data.Index = 0;
 	OTA_Data.Length = 0;
@@ -147,12 +148,12 @@ static void ext_reset_index(void)
 	ota_frame= ETX_OTA_FRAME_START;
 }
 
-static void ext_end_frame(void)
+static void ETX_End_Frame(void)
 {
 	ota_frame= ETX_OTA_FRAME_START;
 }
 
-static void ext_init_otadata(void)
+static void ETX_Init_OTAdata(void)
 {
 	OTA_Data.Index = 0;
 	OTA_Data.Length = 0;
@@ -160,6 +161,18 @@ static void ext_init_otadata(void)
 	memset( OTA_Data.Buffer, 0, ETX_OTA_PACKET_MAX_SIZE );
 }
 
+static void ETX_Program_Main_App(void)
+{
+	int i;
+	uint32_t address_main = FLASH_APP_MAIN_ADDR, address_tmp = FLASH_APP_TEMP_ADDR;
+	FLASH_If_Erase(FLASH_APP_MAIN_ADDR);
+	FLASH->KEYR =  0x45670123;
+	FLASH->KEYR =  0xCDEF89AB;
+	for(i = 0; i < SizeFileBin/4; i++)
+	{
+		Flash_Write32bit(&address_main, Flash_Read32bit(&address_tmp));
+	}
+}
 
 void USART1_IRQHandler()
 {
@@ -171,12 +184,12 @@ void USART1_IRQHandler()
 			case ETX_OTA_FRAME_START:
 				if(temp_char != ETX_OTA_SOF)
 				{
-					ext_init_otadata();
+					ETX_Init_OTAdata();
 					USART_SendString("Start Frame ERROR\n");
 				}
 				else
 				{
-					ext_init_otadata();
+					ETX_Init_OTAdata();
 					ota_frame = ETX_OTA_FRAME_TYPE;
 					OTA_Data.Buffer[OTA_Data.Index] = temp_char;
 					OTA_Data.Index++;
@@ -245,7 +258,7 @@ void USART1_IRQHandler()
 			case ETX_OTA_FRAME_END:
 				if(temp_char != ETX_OTA_EOF)
 				{
-					ext_reset_index();
+					ETX_Reset_Index();
 					USART_SendString("End Frame ERROR\n");
 				}
 				else
@@ -254,7 +267,7 @@ void USART1_IRQHandler()
 					OTA_Data.Buffer[OTA_Data.Index] = temp_char;
 					OTA_Data.Index++;
 					OTA_Data.Buffer[OTA_Data.Index] = 0x00;
-					ext_end_frame();
+					ETX_End_Frame();
 				}
 			break;
 		}

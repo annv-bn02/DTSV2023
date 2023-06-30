@@ -11,7 +11,8 @@ extern "C"{
 #define ETX_OTA_ACK  0x00    // ACK
 #define ETX_OTA_NACK 0x01    // NACK
 
-#define ETX_APP_FLASH_ADDR 0x08004000   //Application's Flash Address
+#define ETX_APP_FLASH_MAIN_ADDR 0x08004000   //Application's Flash Address
+#define ETX_APP_FLASH_TEMP_ADDR 0x08008000   //Application's Flash Address
 
 #define ETX_OTA_DATA_MAX_SIZE ( 256 )  //Maximum data Size
 #define ETX_OTA_DATA_OVERHEAD (    9 )  //data overhead
@@ -92,7 +93,7 @@ typedef struct
  * |     | Packet |     |     |     |     |
  * | SOF | Type   | Len | CMD | CRC | EOF |
  * |_____|________|_____|_____|_____|_____|
- *   1B      1B     2B    1B     4B    1B
+ *   1B      1B     2B    1B     2B    1B
  */
 typedef struct
 {
@@ -111,7 +112,7 @@ typedef struct
  * |     | Packet |     | Header |     |     |
  * | SOF | Type   | Len |  Data  | CRC | EOF |
  * |_____|________|_____|________|_____|_____|
- *   1B      1B     2B     16B     4B    1B
+ *   1B      1B     2B     16B     2B    1B
  */
 typedef struct
 {
@@ -130,7 +131,7 @@ typedef struct
  * |     | Packet |     |        |     |     |
  * | SOF | Type   | Len |  Data  | CRC | EOF |
  * |_____|________|_____|________|_____|_____|
- *   1B      1B     2B    nBytes   4B    1B
+ *   1B      1B     2B    nBytes   2B    1B
  */
 typedef struct
 {
@@ -147,7 +148,7 @@ typedef struct
  * |     | Packet |     |        |     |     |
  * | SOF | Type   | Len | Status | CRC | EOF |
  * |_____|________|_____|________|_____|_____|
- *   1B      1B     2B      1B     4B    1B
+ *   1B      1B     2B      1B     2B    1B
  */
 typedef struct
 {
@@ -181,8 +182,8 @@ typedef union
 }u8Tou32_u;
 extern ETX_OTA_VR_t OTA_Data;
 ETX_OTA_EX_ etx_ota_download_and_flash( void );
-void etx_receive_chunk(void);
-void etx_run(void);
+void ETX_Receive_Chunk(void);
+void ETX_Run(void);
 uint16_t Check_Sum(uint8_t *buf, uint8_t len);
 #ifdef __cplusplus
 }

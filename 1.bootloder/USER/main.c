@@ -38,16 +38,16 @@ int main (void){
 	Fn_DELAY_Init(72);
 	db_DEBUG_Init(9600);
 	USART_Config(9600);
-	etx_receive_chunk();
+	ETX_Receive_Chunk();
 	while(1)
 	{
 		if(GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_0))
 		{
-			etx_run();
+			ETX_Run();
 		}
 		else
 		{
-			iap_load_app(FLASH_APP_ADDR);
+			iap_load_app(FLASH_APP_MAIN_ADDR);
 		}
 	}
 }

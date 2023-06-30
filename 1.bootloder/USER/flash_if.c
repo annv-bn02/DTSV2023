@@ -1,6 +1,6 @@
 #include "flash_if.h"
 
-
+#define WAIT_BUSY 	while((FLASH->SR & FLASH_SR_BSY) == FLASH_SR_BSY){}
 
 static uint32_t GetSize_Sector(uint32_t Size)
 {
@@ -39,7 +39,7 @@ void FLASH_If_Finish(void)
 uint32_t FLASH_If_Erase(uint32_t Flash_StartAddr)
 {
     uint32_t i = 0;
-    uint32_t UserSize_Sector = APPLICATION_END_ADDRESS - Flash_StartAddr;
+    uint32_t UserSize_Sector = 0x4000;
     uint32_t PageNum = GetSize_Sector(UserSize_Sector);
     FLASH_Status FLASHStatus = FLASH_COMPLETE;
     
@@ -78,4 +78,25 @@ uint32_t FLASH_If_Write(__IO uint32_t* FlashAddress, uint32_t* Data ,uint32_t Da
     }
 
     return (0);
+}
+
+void  Flash_Write32bit(uint32_t *vr_page_address,uint32_t data)
+{
+	WAIT_BUSY
+	FLASH->CR |= FLASH_CR_PG;
+	WAIT_BUSY
+	*(uint16_t*)*vr_page_address = (uint16_t)(data & 0xffff);
+	*vr_page_address += 2U;
+	WAIT_BUSY
+	*(uint16_t*)*vr_page_address = (uint16_t)(data>>16 & 0xffff);
+	*vr_page_address += 2U;
+	WAIT_BUSY
+	FLASH->CR &= ~FLASH_CR_PG;	
+}
+
+uint32_t Flash_Read32bit(uint32_t *vr_page_address)
+{
+	uint32_t tmp = *(uint32_t *)*vr_page_address;
+	*vr_page_address += 4U;
+	return tmp;
 }
