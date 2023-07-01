@@ -6,6 +6,8 @@
 #include "stdio.h"
 #include "debug.h"
 
+uint8_t update_message[4] = {0xAA, 0x10, 0x11, 0xBB};
+uint8_t update_flag = 1;
 
 struct __FILE {
     int dummy;
@@ -128,6 +130,15 @@ USART_InitTypeDef USART_init1;
 			if(temp_char != '\n')
 			{	
 				RRX[RXI] = temp_char;
+				update_flag = 1;
+				if(RXI < 4 && RRX[RXI] != update_message[RXI])
+				{
+					update_flag = 0;
+				}
+				if(RXI == 3 && update_flag == 1)
+				{
+					Flash_Update_Bootloader();
+				}
 				RXI++;
 			}
 			else

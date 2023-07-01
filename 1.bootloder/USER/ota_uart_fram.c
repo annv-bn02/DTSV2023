@@ -164,7 +164,7 @@ static void ETX_Init_OTAdata(void)
 static void ETX_Program_Main_App(void)
 {
 	int i;
-	uint32_t address_main = FLASH_APP_MAIN_ADDR, address_tmp = FLASH_APP_TEMP_ADDR;
+	uint32_t address_main = FLASH_APP_MAIN_ADDR, address_tmp = FLASH_APP_TEMP_ADDR, stt_booloader_address = FLASH_STT_BOOTLOADER_ADDRESS;;
 	FLASH_If_Erase(FLASH_APP_MAIN_ADDR);
 	FLASH->KEYR =  0x45670123;
 	FLASH->KEYR =  0xCDEF89AB;
@@ -172,6 +172,9 @@ static void ETX_Program_Main_App(void)
 	{
 		Flash_Write32bit(&address_main, Flash_Read32bit(&address_tmp));
 	}
+	Flash_PageErase(stt_booloader_address);
+	Flash_Write8bit(&stt_booloader_address, 0);
+	NVIC_SystemReset();
 }
 
 void USART1_IRQHandler()

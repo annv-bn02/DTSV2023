@@ -11,7 +11,7 @@
 GPIO_InitTypeDef  GPIO_InitStructure;
 void Fn_GPIO_Init (void);
 
-
+uint8_t bootloader_stt = 0;
 typedef  void (*iapfun)(void);
 void iap_load_app(u32 appxaddr);
 iapfun jump2app;
@@ -31,7 +31,7 @@ void iap_load_app(uint32_t appxaddr)
 }
 
 int main (void){
-	int i;
+	int i, bootloader_stt_address = 0x0801C000;
 	SystemInit();
 	SystemCoreClockUpdate();
 	Fn_GPIO_Init();
@@ -41,14 +41,15 @@ int main (void){
 	ETX_Receive_Chunk();
 	while(1)
 	{
-		if(GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_0))
-		{
-			ETX_Run();
-		}
-		else
-		{
-			iap_load_app(FLASH_APP_MAIN_ADDR);
-		}
+			bootloader_stt = *(uint8_t *)bootloader_stt_address;
+			if(bootloader_stt == 1)
+			{
+				ETX_Run();
+			}
+			else
+			{
+				iap_load_app(FLASH_APP_MAIN_ADDR);
+			}
 	}
 }
 

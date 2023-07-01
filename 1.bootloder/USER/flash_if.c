@@ -80,6 +80,17 @@ uint32_t FLASH_If_Write(__IO uint32_t* FlashAddress, uint32_t* Data ,uint32_t Da
     return (0);
 }
 
+void  Flash_Write8bit(uint32_t *vr_page_address,uint8_t data)
+{
+	WAIT_BUSY
+	FLASH->CR |= FLASH_CR_PG;
+	WAIT_BUSY
+	*(uint16_t*)*vr_page_address = data;
+	*vr_page_address += 2U;
+	WAIT_BUSY
+	FLASH->CR &= ~FLASH_CR_PG;	
+}
+
 void  Flash_Write32bit(uint32_t *vr_page_address,uint32_t data)
 {
 	WAIT_BUSY
@@ -92,6 +103,18 @@ void  Flash_Write32bit(uint32_t *vr_page_address,uint32_t data)
 	*vr_page_address += 2U;
 	WAIT_BUSY
 	FLASH->CR &= ~FLASH_CR_PG;	
+}
+
+void Flash_PageErase(uint32_t vr_page_address)
+{
+	//wait busy reset
+	WAIT_BUSY
+	FLASH->CR |= FLASH_CR_PER;
+	FLASH->AR = vr_page_address;
+	FLASH->CR |= FLASH_CR_STRT;
+	WAIT_BUSY
+	FLASH->CR &= ~FLASH_CR_PER;
+	FLASH->CR &= ~FLASH_CR_STRT;
 }
 
 uint32_t Flash_Read32bit(uint32_t *vr_page_address)
