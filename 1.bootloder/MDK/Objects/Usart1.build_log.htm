@@ -3,36 +3,36 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: µVision V5.29.0.0
+IDE-Version: µVision V5.27.1.0
 Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: a b, c, LIC=LSNXV-P8A2D-9U24U-SWG3I-H6EJP-SZQZC
+License Information: a b, c, LIC=8VRJ7-EX4LF-740S0-BCYRT-A8NHS-23FYG
  
 Tool Versions:
-Toolchain:       MDK-ARM Plus  Version: 5.29.0.0
-Toolchain Path:  C:\Program Files\KeilC529\ARM\ARMCC\Bin
+Toolchain:       MDK-ARM Plus  Version: 5.27.1.0
+Toolchain Path:  C:\Keil_v527\ARM\ARMCC\Bin
 C Compiler:      Armcc.exe V5.06 update 6 (build 750)
 Assembler:       Armasm.exe V5.06 update 6 (build 750)
 Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
 Library Manager: ArmAr.exe V5.06 update 6 (build 750)
 Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
-CPU DLL:         SARMCM3.DLL V5.29.0.0
-Dialog DLL:      DCM.DLL V1.17.3.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
-Dialog DLL:      TCM.DLL V1.36.5.0
+CPU DLL:         SARMCM3.DLL V5.27.1.0
+Dialog DLL:      DCM.DLL V1.17.2.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.6.0
+Dialog DLL:      TCM.DLL V1.36.1.0
  
 <h2>Project:</h2>
 F:\Project\2.DTSV2023\1.bootloder\MDK\Usart1.uvprojx
-Project File Date:  06/30/2023
+Project File Date:  07/06/2023
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Program Files\KeilC529\ARM\ARMCC\Bin'
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v527\ARM\ARMCC\Bin'
 Build target 'Target 1'
 compiling main.c...
 ..\USER\main.c(34): warning:  #177-D: variable "i"  was declared but never referenced
   	int i, bootloader_stt_address = 0x0801C000;
 ..\USER\main.c: 1 warning, 0 errors
 linking...
-Program Size: Code=5096 RO-data=268 RW-data=128 ZI-data=13184  
+Program Size: Code=5092 RO-data=268 RW-data=128 ZI-data=13184  
 FromELF: creating hex file...
 ".\Objects\Usart1.axf" - 0 Error(s), 1 Warning(s).
 
@@ -45,8 +45,8 @@ Package Vendor: ARM
    * Component: CORE Version: 5.6.0
 
 Package Vendor: Keil
-                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.1.0.pack
-                Keil.STM32F1xx_DFP.2.1.0
+                http://www.keil.com/pack/Keil.STM32F1xx_DFP.2.3.0.pack
+                Keil.STM32F1xx_DFP.2.3.0
                 STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
    * Component: Startup Version: 1.0.0
    * Component: Flash Version: 3.5.0
@@ -59,29 +59,29 @@ Package Vendor: Keil
   .\RTE\Device\STM32F103C8
   .\RTE\_Target_1
   C:\Users\nvan0\AppData\Local\Arm\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include
-  C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\Include
-  C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.1.0\Device\StdPeriph_Driver\inc
+  C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\Include
+  C:\Users\nvan0\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.3.0\Device\StdPeriph_Driver\inc
 
 <h2>Collection of Component Files used:</h2>
 
    * Component: ARM::CMSIS:CORE:5.6.0
 
    * Component: Keil::Device:Startup:1.0.0
+      Include file:  RTE_Driver\Config\RTE_Device.h
+      Source file:   Device\Source\system_stm32f10x.c
       Source file:   Device\Source\ARM\startup_stm32f10x_md.s
       Source file:   Device\Source\ARM\STM32F1xx_OPT.s
-      Source file:   Device\Source\system_stm32f10x.c
-      Include file:  RTE_Driver\Config\RTE_Device.h
 
    * Component: Keil::Device:StdPeriph Drivers:Flash:3.5.0
-      Source file:   Device\StdPeriph_Driver\src\stm32f10x_flash.c
       Include file:  Device\StdPeriph_Driver\inc\stm32f10x_flash.h
+      Source file:   Device\StdPeriph_Driver\src\stm32f10x_flash.c
 
    * Component: Keil::Device:StdPeriph Drivers:Framework:3.5.1
+      Source file:   Device\StdPeriph_Driver\templates\stm32f10x_conf.h
+      Source file:   Device\StdPeriph_Driver\src\misc.c
+      Source file:   Device\StdPeriph_Driver\templates\stm32f10x_it.c
       Include file:  Device\StdPeriph_Driver\templates\stm32f10x_it.h
       Include file:  Device\StdPeriph_Driver\inc\misc.h
-      Source file:   Device\StdPeriph_Driver\templates\stm32f10x_conf.h
-      Source file:   Device\StdPeriph_Driver\templates\stm32f10x_it.c
-      Source file:   Device\StdPeriph_Driver\src\misc.c
 
    * Component: Keil::Device:StdPeriph Drivers:GPIO:3.5.0
       Include file:  Device\StdPeriph_Driver\inc\stm32f10x_gpio.h

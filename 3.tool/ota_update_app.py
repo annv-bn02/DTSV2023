@@ -14,6 +14,20 @@ def write_read(x):
     data = arduino.readline()
     return data
 
+def send_update_message():
+    sof             = 0xAA
+    update_1        = 0x10
+    update_2        = 0x11
+    eof             = 0xBB
+
+    bufferLength = 4
+    sampleBuffer = bytearray(bufferLength)
+    sampleBuffer[0] = sof
+    sampleBuffer[1] = update_1
+    sampleBuffer[2] = update_2 
+    sampleBuffer[3] = eof
+    arduino.write(sampleBuffer)
+
 def send_ota_start():
     sof         = 0xAA
     packet_type = 0x00
@@ -121,7 +135,7 @@ def check_sum(buf, length):
 
 def calculate_fram_data():
     # get the size of file
-    path = r"F:\MCU\STM32F103\1.Code\13.Bootloader\2.Apptest_stm32\MDK\Objects\gpio_blynk.bin"
+    path = r"F:\Project\2.DTSV2023\2.Apptest_stm32\MDK\Objects\gpio_blynk.bin"
     size = os.path.getsize(path) 
     print('Size of file is', size, 'bytes')
     file = open(path, "rb")
@@ -130,6 +144,9 @@ def calculate_fram_data():
     file.close()
     chia = size/128
     index = 0
+    print("-------Send Update Message-------")  
+    send_update_message()
+    time.sleep(2.5)
     print("-------Start-------")  
     send_ota_start()
     time.sleep(2.5)

@@ -5,6 +5,7 @@
 unsigned int tim_prescaler=72;
 unsigned int tim_period=1000;
 unsigned char blink = 0;
+uint32_t delay_time;
 void Timer_Config(void)
 {
 	TIM_TimeBaseInitTypeDef Timer_struct, pwm_struct;
@@ -18,7 +19,7 @@ void Timer_Config(void)
 	
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
 	Timer_struct.TIM_CounterMode		= TIM_CounterMode_Up;
-	Timer_struct.TIM_Prescaler			= 2000 - 1;
+	Timer_struct.TIM_Prescaler			= 200 - 1;
 	Timer_struct.TIM_Period				= 36000 - 1;
 	Timer_struct.TIM_ClockDivision		= 0;
 	Timer_struct.TIM_RepetitionCounter	= 0;

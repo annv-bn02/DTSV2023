@@ -41,15 +41,15 @@ int main (void){
 	ETX_Receive_Chunk();
 	while(1)
 	{
-			bootloader_stt = *(uint8_t *)bootloader_stt_address;
-			if(bootloader_stt == 1)
-			{
-				ETX_Run();
-			}
-			else
-			{
-				iap_load_app(FLASH_APP_MAIN_ADDR);
-			}
+		bootloader_stt = *(uint8_t *)bootloader_stt_address;
+		if(bootloader_stt)
+		{
+			ETX_Run();
+		}
+		else
+		{
+			iap_load_app(FLASH_APP_MAIN_ADDR);
+		}
 	}
 }
 

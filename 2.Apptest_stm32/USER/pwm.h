@@ -12,7 +12,7 @@
 #ifdef __cplusplus
  extern "C" {
 #endif
-#include "stdio.h"
+#include "stm32f10x.h" 
 extern unsigned char blink;
 void Timer_Config(void);
 void PWM_Config(void);

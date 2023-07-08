@@ -15,7 +15,7 @@ int main (void){
 	PWM_Config();
 	Lcd_Config();
 	Lcd_First_Config();
-	lcd_Send_String_Line1("Hello");
+	lcd_Send_String_Line1("Hello World");
 	while(1)
 	{
 		if(db_DEBUG_flag()==1)
