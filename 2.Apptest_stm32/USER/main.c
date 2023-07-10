@@ -12,6 +12,7 @@ int main (void){
 	Fn_GPIO_Init();
 	db_DEBUG_Init(9600);
 	Timer_Config();
+	GPIO_WriteBit(GPIOC, GPIO_Pin_13, 1);
 	PWM_Config();
 	Lcd_Config();
 	Lcd_First_Config();
