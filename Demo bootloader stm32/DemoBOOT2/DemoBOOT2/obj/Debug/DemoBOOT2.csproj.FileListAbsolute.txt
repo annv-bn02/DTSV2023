@@ -1,9 +1,0 @@
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\bin\Debug\DemoBOOT2.exe.config
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\bin\Debug\DemoBOOT2.exe
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\bin\Debug\DemoBOOT2.pdb
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\obj\Debug\DemoBOOT2.csprojResolveAssemblyReference.cache
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\obj\Debug\DemoBOOT2.Form1.resources
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\obj\Debug\DemoBOOT2.Properties.Resources.resources
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\obj\Debug\DemoBOOT2.csproj.GenerateResource.Cache
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\obj\Debug\DemoBOOT2.exe
-D:\mach linh tinh\mach linh tinh 5\clock P5 FUll\V3 wifi\DemoBOOT2\DemoBOOT2\obj\Debug\DemoBOOT2.pdb
