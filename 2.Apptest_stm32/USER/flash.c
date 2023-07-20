@@ -1,5 +1,5 @@
 #include "flash.h"
-#include "string.h"
+#include "debug.h"
 
 uint8_t arr_data8bit[1000];
 uint16_t arr_data16bit[1000];
@@ -258,6 +258,7 @@ void Flash_AllPageErase(void)
 void Flash_Update_Bootloader(void)
 {
 	uint32_t stt_booloader_address = FLASH_STT_BOOTLOADER_ADDRESS;
+	db_DEBUG_Putchar("Update");
 	Flash_PageErase(stt_booloader_address);
 	Flash_Write8bit(&stt_booloader_address, 1);
 	NVIC_SystemReset();

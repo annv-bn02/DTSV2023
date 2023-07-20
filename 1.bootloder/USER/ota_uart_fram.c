@@ -5,6 +5,7 @@
 #include "debug.h"
 #include "flash_if.h"
 #include "usart.h"
+#include "timer.h"
 ETX_OTA_VR_t OTA_Data;
 static ETX_OTA_FRAME_DATA_	ota_frame = ETX_OTA_FRAME_START;
 static ETX_OTA_STATE_ 		ota_state = ETX_OTA_STATE_START;
@@ -16,12 +17,13 @@ uint32_t datasize;
 uint32_t SizeFileBin;
 uint32_t Count_SizeFileBin = FLASH_APP_TEMP_ADDR;
 uint32_t tempss = 0;
+uint8_t mode;
 
 static void ETX_Init_OTAdata(void);
 static void ETX_Reset_Index(void);
 static void ETX_End_Frame(void);
 static void ETX_Process_Frame(void);
-static void ETX_Program_Main_App(void);
+void ETX_Program_Main_App(void);
 
 void ETX_Run(void)
 {
@@ -161,17 +163,26 @@ static void ETX_Init_OTAdata(void)
 	memset( OTA_Data.Buffer, 0, ETX_OTA_PACKET_MAX_SIZE );
 }
 
-static void ETX_Program_Main_App(void)
+void ETX_Program_Main_App(void)
 {
 	int i;
-	uint32_t address_main = FLASH_APP_MAIN_ADDR, address_tmp = FLASH_APP_TEMP_ADDR, stt_booloader_address = FLASH_STT_BOOTLOADER_ADDRESS;;
+	uint32_t address_main = FLASH_APP_MAIN_ADDR, address_tmp = FLASH_APP_TEMP_ADDR, stt_booloader_address = FLASH_STT_BOOTLOADER_ADDRESS;
 	FLASH_If_Erase(FLASH_APP_MAIN_ADDR);
 	FLASH->KEYR =  0x45670123;
 	FLASH->KEYR =  0xCDEF89AB;
 	for(i = 0; i < SizeFileBin/4; i++)
 	{
-		Flash_Write32bit(&address_main, Flash_Read32bit(&address_tmp));
+		FLASH_ProgramWord(address_main, Flash_Read32bit(&address_tmp));
+		address_main += 4U;
 	}
+	Flash_PageErase(stt_booloader_address);
+	Flash_Write8bit(&stt_booloader_address, 0);
+	NVIC_SystemReset();
+}
+
+void Flash_OTA_Error(void)
+{
+	uint32_t stt_booloader_address = FLASH_STT_BOOTLOADER_ADDRESS;
 	Flash_PageErase(stt_booloader_address);
 	Flash_Write8bit(&stt_booloader_address, 0);
 	NVIC_SystemReset();
@@ -182,6 +193,7 @@ void USART1_IRQHandler()
 	if(USART_GetITStatus(USART1,USART_IT_RXNE) != RESET)
 	{
 		uint8_t temp_char = USART_ReceiveData(USART1);
+		timeout_cnt = 0;
 		switch(ota_frame)
 		{
 			case ETX_OTA_FRAME_START:

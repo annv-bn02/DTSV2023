@@ -32,7 +32,7 @@ void Fn_DELAY_Init (unsigned char _CLK)
 
 
 
-void Fn_DELAY_ms (unsigned int _vrui_Time)
+void Fn_Delay_Ms (unsigned int _vrui_Time)
 {	 		  	  		              //72M������,nms<=1864
 	u32 temp;		   
 	SysTick->LOAD=(u32)_vrui_Time*fac_ms;    //ʱ�����(SysTick->LOADΪ24bit)
@@ -48,7 +48,7 @@ void Fn_DELAY_ms (unsigned int _vrui_Time)
 }  
 
 
-void Fn_DELAY_us (unsigned long _vrui_Time)
+void Fn_Delay_Us (unsigned long _vrui_Time)
 {		
 	u32 temp;	    	 
 	SysTick->LOAD=_vrui_Time*fac_us;         //ʱ�����	  		 

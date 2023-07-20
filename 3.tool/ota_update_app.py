@@ -7,7 +7,7 @@ import numpy
 import struct
 
 
-arduino = serial.Serial(port='COM3', baudrate=9600, timeout=.8)
+arduino = serial.Serial(port='COM7', baudrate=9600, timeout=.8)
 def write_read(x):
     arduino.write(bytes(x, 'utf-8'))
     time.sleep(0.05)

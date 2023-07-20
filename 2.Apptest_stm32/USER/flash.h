@@ -12,8 +12,10 @@
 #ifdef __cplusplus
  extern "C" {
 #endif
+
 #include "stm32f10x.h"                   // Device header
 #include "stm32f10x_flash.h"            // Keil::Device:StdPeriph Drivers:Flash
+
 #define WAIT_BUSY 	while((FLASH->SR & FLASH_SR_BSY) == FLASH_SR_BSY){}
 
 #define FLASH_STT_BOOTLOADER_ADDRESS 0x0801C000	
@@ -50,7 +52,7 @@ uint16_t Flash_Read16bit(uint32_t *vr_page_address);
 uint32_t Flash_Read32bit(uint32_t *vr_page_address);
 uint64_t Flash_Read64bit(uint32_t *vr_page_address);
 
-void FLash_Update_Bootloader(void);
+void Flash_Update_Bootloader(void);
 #ifdef __cplusplus
 }
 #endif

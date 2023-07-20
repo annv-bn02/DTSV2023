@@ -6,12 +6,13 @@
 #include "flash_if.h"
 #include "ota_uart_fram.h"
 #include "usart.h"
+#include "timer.h"
+#include "watchdog.h"
 #define LED GPIO_Pin_0
 
 GPIO_InitTypeDef  GPIO_InitStructure;
 void Fn_GPIO_Init (void);
 
-uint8_t bootloader_stt = 0;
 typedef  void (*iapfun)(void);
 void iap_load_app(u32 appxaddr);
 iapfun jump2app;
@@ -39,10 +40,11 @@ int main (void){
 	db_DEBUG_Init(9600);
 	USART_Config(9600);
 	ETX_Receive_Chunk();
+	Timer_Config();
 	while(1)
 	{
-		bootloader_stt = *(uint8_t *)bootloader_stt_address;
-		if(bootloader_stt)
+		mode = *(uint8_t *)bootloader_stt_address;
+		if(mode)
 		{
 			ETX_Run();
 		}

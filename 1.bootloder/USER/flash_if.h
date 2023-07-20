@@ -15,6 +15,7 @@
 #define STM32RBT6_SECTOR_SIZE   1024
 #define PAGE_SIZE   STM32RBT6_SECTOR_SIZE
 #define FLASH_STT_BOOTLOADER_ADDRESS 0x0801C000	
+
 extern void FLASH_If_Init(void);
 extern void FLASH_If_Finish(void);
 extern uint32_t FLASH_If_Erase(uint32_t StartSector);
@@ -24,4 +25,5 @@ void  Flash_Write8bit(uint32_t *vr_page_address,uint8_t arr_data);
 void  Flash_Write32bit(uint32_t *vr_page_address,uint32_t data);
 extern int  writeSector(uint32_t Address,void * values, uint16_t size);
 void Flash_PageErase(uint32_t vr_page_address);
+
 #endif

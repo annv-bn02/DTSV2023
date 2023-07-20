@@ -1,14 +1,13 @@
 #include "stm32f10x_gpio.h"             // Keil::Device:StdPeriph Drivers:GPIO
 #include "stm32f10x_tim.h"              // Keil::Device:StdPeriph Drivers:TIM
 #include "pwm.h"                  // Device header
-#include "debug.h"
 unsigned int tim_prescaler=72;
 unsigned int tim_period=1000;
-unsigned char blink = 0;
-uint32_t delay_time;
-void Timer_Config(void)
+void PWM_Config(void)
 {
-	TIM_TimeBaseInitTypeDef Timer_struct, pwm_struct;
+	TIM_TimeBaseInitTypeDef pwm_struct;
+	TIM_OCInitTypeDef timer_oc;
+	GPIO_InitTypeDef pin_pwm;
 	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
 	pwm_struct.TIM_CounterMode		= TIM_CounterMode_Up;
 	pwm_struct.TIM_Prescaler			= tim_prescaler - 1;
@@ -17,31 +16,6 @@ void Timer_Config(void)
 	pwm_struct.TIM_RepetitionCounter	= 0;
 	TIM_TimeBaseInit(TIM4, &pwm_struct);
 	
-	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
-	Timer_struct.TIM_CounterMode		= TIM_CounterMode_Up;
-	Timer_struct.TIM_Prescaler			= 2000 - 1;
-	Timer_struct.TIM_Period				= 36000 - 1;
-	Timer_struct.TIM_ClockDivision		= 0;
-	Timer_struct.TIM_RepetitionCounter	= 0;
-	TIM_TimeBaseInit(TIM2, &Timer_struct);
-	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
-	NVIC_EnableIRQ(TIM2_IRQn);
-	TIM_Cmd(TIM2,ENABLE);
-}
-
-void TIM2_IRQHandler()
-{
-	if(TIM_GetITStatus(TIM2, TIM_IT_Update)!=RESET)
-	{		
-		blink =! blink;
-	}	
-	TIM_ClearITPendingBit(TIM2,TIM_IT_Update);
-}
-
-void PWM_Config(void)
-{
-	TIM_OCInitTypeDef timer_oc;
-	GPIO_InitTypeDef pin_pwm;
 	timer_oc.TIM_OCMode 		= TIM_OCMode_PWM1;
 	timer_oc.TIM_Pulse 			= 500;
 	timer_oc.TIM_OCPolarity 	= TIM_OCPolarity_High;

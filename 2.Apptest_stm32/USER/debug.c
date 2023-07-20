@@ -5,6 +5,7 @@
 #include "string.h"
 #include "stdio.h"
 #include "debug.h"
+#include "flash.h"
 
 uint8_t update_message[4] = {0xAA, 0x10, 0x11, 0xBB};
 uint8_t update_flag = 1;
@@ -137,6 +138,7 @@ USART_InitTypeDef USART_init1;
 				}
 				if(RXI == 3 && update_flag == 1)
 				{
+					NVIC_DisableIRQ(USART1_IRQn|USART2_IRQn|USART3_IRQn|TIM2_IRQn|TIM4_IRQn|TIM3_IRQn|SysTick_IRQn);
 					Flash_Update_Bootloader();
 				}
 				RXI++;
@@ -150,4 +152,3 @@ USART_InitTypeDef USART_init1;
 		}
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 	}
-

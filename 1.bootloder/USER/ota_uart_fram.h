@@ -180,10 +180,13 @@ typedef union
 	uint8_t Data_In[4];
 	uint32_t Data_Out;
 }u8Tou32_u;
+
+extern uint8_t mode;
 extern ETX_OTA_VR_t OTA_Data;
 ETX_OTA_EX_ etx_ota_download_and_flash( void );
 void ETX_Receive_Chunk(void);
 void ETX_Run(void);
+void Flash_OTA_Error(void);
 uint16_t Check_Sum(uint8_t *buf, uint8_t len);
 #ifdef __cplusplus
 }

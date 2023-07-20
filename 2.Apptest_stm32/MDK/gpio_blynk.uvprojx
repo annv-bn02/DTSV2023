@@ -10,7 +10,7 @@
       <TargetName>GPIO</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
+      <pCCUsed>5060960::V5.06 update 7 (build 960)::.\ARMCC</pCCUsed>
       <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -185,6 +185,7 @@
             <uocXRam>0</uocXRam>
             <RvdsVP>0</RvdsVP>
             <RvdsMve>0</RvdsMve>
+            <RvdsCdeCp>0</RvdsCdeCp>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -299,7 +300,7 @@
               </OCR_RVCT8>
               <OCR_RVCT9>
                 <Type>0</Type>
-                <StartAddress>0x20000000</StartAddress>
+                <StartAddress>0x20005000</StartAddress>
                 <Size>0x5000</Size>
               </OCR_RVCT9>
               <OCR_RVCT10>
@@ -351,7 +352,7 @@
             <NoWarn>0</NoWarn>
             <uSurpInc>0</uSurpInc>
             <useXO>0</useXO>
-            <uClangAs>0</uClangAs>
+            <ClangAsOpt>4</ClangAsOpt>
             <VariousControls>
               <MiscControls></MiscControls>
               <Define></Define>
@@ -412,6 +413,21 @@
               <FileType>1</FileType>
               <FilePath>..\USER\flash.c</FilePath>
             </File>
+            <File>
+              <FileName>mcu-i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\mcu-i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_pcf8574.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\sensor_pcf8574.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\USER\timer.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -441,6 +457,26 @@
               <FileName>flash.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\USER\flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>mcu-i2c.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\mcu-i2c.h</FilePath>
+            </File>
+            <File>
+              <FileName>sensor_pcf8574.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\sensor_pcf8574.h</FilePath>
+            </File>
+            <File>
+              <FileName>system.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\system.h</FilePath>
+            </File>
+            <File>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\USER\timer.h</FilePath>
             </File>
           </Files>
         </Group>

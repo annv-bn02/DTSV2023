@@ -1,6 +1,6 @@
 #include "stm32f10x.h"                  // Device header
 #include "stm32f10x_i2c.h"              // Keil::Device:StdPeriph Drivers:I2C
-#include "Delay.h"
+#include "pwm.h"
 #include "lcd.h"
 
 #define PCF8574_Address      	0x4e
@@ -76,20 +76,20 @@ void lcd_Data_write(uint8_t data)
 void Lcd_First_Config(void)
 {
 	lcd_Control_write(0x33);
-	Fn_DELAY_ms(10);
+	Fn_Delay_Ms(10);
 	lcd_Control_write(0x32);
-	Fn_DELAY_ms(50);
+	Fn_Delay_Ms(50);
 	lcd_Control_write(0x28);
-	Fn_DELAY_ms(50);
+	Fn_Delay_Ms(50);
 	lcd_Control_write(0x01);
-	Fn_DELAY_ms(50);
+	Fn_Delay_Ms(50);
 	
 	lcd_Control_write(0x06);
-	Fn_DELAY_ms(50);
+	Fn_Delay_Ms(50);
 	lcd_Control_write(0x0c);
-	Fn_DELAY_ms(50);
+	Fn_Delay_Ms(50);
 	lcd_Control_write(0x02);
-	Fn_DELAY_ms(50);
+	Fn_Delay_Ms(50);
 }
 //hien thi dong 1 lcd
 void lcd_Send_String_Line1(uint8_t *String)
@@ -113,5 +113,5 @@ void lcd_Send_String_Line2(uint8_t *String)
 void clear_LCD(void)
 {
 	lcd_Control_write(0x01);
-	Fn_DELAY_ms(10);
+	Fn_Delay_Ms(10);
 }
