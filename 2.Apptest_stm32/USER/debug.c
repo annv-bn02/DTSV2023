@@ -41,6 +41,7 @@ char RRX[string_size];
 volatile unsigned int RXI = 0;
 volatile char temp_char;
 char Number[50];
+static uint8_t Check_Update(uint32_t pos);
 //==============================Khoi tao GPIO va USART==============================
 GPIO_InitTypeDef GPIO_init1;
 USART_InitTypeDef USART_init1;
@@ -131,16 +132,14 @@ USART_InitTypeDef USART_init1;
 			if(temp_char != '\n')
 			{	
 				RRX[RXI] = temp_char;
-				update_flag = 1;
-				if(RXI < 4 && RRX[RXI] != update_message[RXI])
+				if(RXI >= 3)
 				{
-					update_flag = 0;
-				}
-				if(RXI == 3 && update_flag == 1)
-				{
-					NVIC_DisableIRQ(USART1_IRQn|USART2_IRQn|USART3_IRQn|TIM2_IRQn|TIM4_IRQn|TIM3_IRQn|SysTick_IRQn);
-					Flash_Update_Bootloader();
-				}
+					if(Check_Update(RXI))
+					{
+						NVIC_DisableIRQ(USART1_IRQn|USART2_IRQn|USART3_IRQn|TIM2_IRQn|TIM4_IRQn|TIM3_IRQn|SysTick_IRQn);
+						Flash_Update_Bootloader();
+					}
+				}	
 				RXI++;
 			}
 			else
@@ -152,3 +151,15 @@ USART_InitTypeDef USART_init1;
 		}
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 	}
+static uint8_t Check_Update(uint32_t pos)
+{
+	int i;
+	for(i = 0; i < 4; i++)
+	{
+		if(RRX[pos - i] != update_message[3 - i])
+		{
+			return 0;
+		}
+	}
+	return 1;
+}

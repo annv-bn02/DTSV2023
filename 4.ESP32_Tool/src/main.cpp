@@ -12,6 +12,7 @@ const char* host = "esp32";
 const char* ssid = "artng";
 const char* password = "12345678";
 int success_flag = 0, success_cnt = 0;  // ledState used to set the LED
+int wifi_count = 0;
 String str_ota_state;
 WebServer server(80);
 
@@ -164,6 +165,14 @@ void loop(void) {
       str_ota_state = " ";
       success_flag = 0;
       success_cnt = 0;
+    }
+  }
+  if(WiFi.status() != WL_CONNECTED) {
+    wifi_count++;
+    if(wifi_count == 10000)
+    {
+      ESP.restart();
+      wifi_count = 0;
     }
   }
   delay(1);

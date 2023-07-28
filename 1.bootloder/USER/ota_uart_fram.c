@@ -264,8 +264,7 @@ void USART1_IRQHandler()
 					}
 					else
 					{
-						USART_SendString("Check Sum ERROR\n");
-						NVIC_SystemReset();			
+						USART_SendString("Check Sum ERROR\n");	
 					}
 				}
 			break;
