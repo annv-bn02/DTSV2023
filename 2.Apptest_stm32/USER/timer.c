@@ -22,7 +22,7 @@ void TIM2_IRQHandler()
 	{		
 //		blink =! blink;
 //		blink_flag = 1;
-		if(blink_cnt++ == 1000)
+		if(blink_cnt++ == 100)
 		{
 			blink_cnt = 0;
 			blink =! blink;

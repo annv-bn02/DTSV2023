@@ -7,7 +7,7 @@ import numpy
 import struct
 
 
-arduino = serial.Serial(port='COM7', baudrate=9600, timeout=.8)
+arduino = serial.Serial(port='COM14', baudrate=9600, timeout=.8)
 def write_read(x):
     arduino.write(bytes(x, 'utf-8'))
     time.sleep(0.05)
@@ -153,6 +153,8 @@ def calculate_fram_data():
     print("-------Header-------")  
     send_ota_header((int(chia+1))*128)
     time.sleep(2.5)
+    for i in range(100):
+            print("%p ", number[i])  
     if (int(chia)*128) == size:
         bufferLength = 128
         sampleBuffer = bytearray(bufferLength)
@@ -162,7 +164,7 @@ def calculate_fram_data():
                     sampleBuffer[j] = number[index]
                     index = index + 1
             send_ota_data(sampleBuffer)
-            time.sleep(0.1)
+            time.sleep(0.15)
     else:
         bufferLength = 128
         sampleBuffer = bytearray(bufferLength)
@@ -183,7 +185,7 @@ def calculate_fram_data():
                     index = index + 1
                     count = count + 1
             send_ota_data(sampleBuffer)
-            time.sleep(0.1)
+            time.sleep(0.15)
     time.sleep(2.5)
     send_ota_end()
     print("-------Done-------")                  

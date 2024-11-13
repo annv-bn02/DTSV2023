@@ -4,35 +4,30 @@
 #include "debug.h"
 #include "timer.h"
 #include "pwm.h"
-//#include "lcd.h"
 #include "mcu-i2c.h"
 #include "sensor_pcf8574.h"
 GPIO_InitTypeDef  GPIO_InitStructure;
 void Fn_GPIO_Init (void);
 int main (void){
 	uint8_t blink_str;
+	uint32_t blink_cnt;
 	SystemCoreClockUpdate();
 	Fn_DELAY_Init(72);
 	Fn_GPIO_Init();
 	db_DEBUG_Init(9600);
-	Timer_Config();
-	PWM_Config();
+//	Timer_Config();
+//	PWM_Config();
 //	
-//	Delay_Ms(100);
-//	Lcd_Config();
-//	Lcd_First_Config();
-//	Delay_Ms(100);
-//	lcd_Send_String_Line1("4");
 	
 	I2Cx_Init(I2C_USED, I2C1_B67, I2C_CLOCK_STANDARD);
 	PCF_Init();
 	PCF_Backlight(0);
 	Fn_Delay_Ms(2000);
-	PCF_Backlight(1);
-	PCF_Print("Electronics");
-	PCF_Goto(2,0);
-	PCF_Print("PTIT");
-	Fn_GPIO_Init();
+	PCF_Backlight(0);
+	PCF_Print("  Electronics  ");
+//	PCF_Goto(2,0);
+//	PCF_Print("PTIT--KTDT1");
+//	Fn_GPIO_Init();
 	while(1)
 	{
 		if(db_DEBUG_flag()==1)
@@ -44,15 +39,21 @@ int main (void){
 		{
 			GPIO_ResetBits(GPIOC, GPIO_Pin_13);
 			blink_flag = 0;
-			PCF_Goto(2,6);
-			PCF_Print("1");
+			PCF_Goto(2,4);
+			PCF_Print(" KTDT1");
 		}
 		else if(blink == 0 && blink_flag)
 		{
 			GPIO_SetBits(GPIOC, GPIO_Pin_13);
 			blink_flag = 0;
-			PCF_Goto(2,6);
-			PCF_Print("0");
+			PCF_Goto(2,4);
+			PCF_Print(" PTIT ");
+		}
+		if(blink_cnt++ == 500)
+		{
+			blink_cnt = 0;
+			blink =! blink;
+			blink_flag = 1;
 		}
 		Fn_Delay_Ms(1);
 	}
